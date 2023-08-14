@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Purpose:
+#
+# Runs a command inside the build container.
+
+set -e
+[ -z "${DEBUG}" ] || set -x
+
+run_build_cmd () {
+    docker compose run --service-ports --rm build $@
+}
+
+cd "$(dirname "$0")/.."
+
+if [ $# -lt "1" ]; then
+    $0 dev
+    exit 0
+fi
+
+if [ $1 == "dev" ]; then
+    run_build_cmd npm run dev
+
+elif [ $1 == "build" ]; then
+    run_build_cmd npm run build
+
+elif [ $1 == "preview" ]; then
+    run_build_cmd npm run preview
+
+else
+    run_build_cmd $@
+
+fi

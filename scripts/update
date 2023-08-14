@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Purpose:
+#
+# Installs application dependencies inside app container.
+
+set -e
+[ -z "${DEBUG}" ] || set -x
+
+# Bash colour variables
+COLOUR_GREEN="\x1b[32;01m"
+COLOUR_RED="\x1b[31;01m"
+COLOUR_RESET="\x1b[39;49;00m"
+
+cd "$(dirname "$0")/.."
+
+echo -e "--> "$COLOUR_GREEN"Updating build dependencies"$COLOUR_RESET
+./scripts/build npm install

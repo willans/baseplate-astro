@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+# Purpose:
+#
+# Bootstraps the project into an initialised state.
+
+set -e
+[ -z "${DEBUG}" ] || set -x
+
+cd "$(dirname "$0")/.."
+
+# Bash colour variables
+COLOUR_GREEN="\x1b[32;01m"
+COLOUR_RED="\x1b[31;01m"
+COLOUR_YELLOW="\x1b[33;01m"
+COLOUR_WHITE="\x1b[97;01m"
+COLOUR_RESET="\x1b[39;49;00m"
+
+# Set default values
+OPT_DO_UPDATE=true
+
+# Parse script option parameters
+for i in "$@"
+do
+    case $i in
+        --no-update)
+            OPT_DO_UPDATE=false
+            shift
+        ;;
+    esac
+done
+
+echo -e $COLOUR_WHITE"🐳 Bootstrapping project...\n"$COLOUR_RESET
+
+# Checks for dotenv existence.
+if [ ! -f .env ]; then
+    echo "Copying .env.example file to .env"
+    cp .env.example .env
+fi
+
+# Extract the project environment file into bash vars.
+export $(grep COMPOSE_FILE .env)
+export $(grep COMPOSE_PROJECT_NAME .env)
+
+# Throw if there is no compose file.
+if [ -z "$COMPOSE_FILE" ]; then
+    echo -e "\n"
+    echo -e $COLOUR_RED "ERROR"$COLOUR_RESET" COMPOSE_FILE is empty or missing from the .env file\n"
+    exit 1
+fi
+echo -e "Using Docker Compose file: $COMPOSE_FILE"
+
+# Throw if there is no compose prefix
+if [ -z "$COMPOSE_PROJECT_NAME" ]; then
+    echo -e "\n"
+    echo -e $COLOUR_RED "ERROR"$COLOUR_RESET" COMPOSE_PROJECT_NAME is empty or missing from the .env file\n"
+    exit 1
+fi
+echo -e "Using Docker Compose prefix: $COMPOSE_PROJECT_NAME"
+echo -e "Environment file OK\n"
+
+# Build and serve all the Docker containers.
+echo -e "--> "$COLOUR_GREEN"Launching project containers"$COLOUR_RESET
+docker compose pull && docker compose up --build --detach
+echo ""
+
+# Installs any application dependencies; e.g. Composer, Yarn.
+echo -e "--> "$COLOUR_GREEN"Installing application dependencies"$COLOUR_RESET
+if $OPT_DO_UPDATE; then
+    ./scripts/update
+    echo ""
+else
+    echo -e "Install application dependencies was skipped because --no-update was passed\n"
+fi
