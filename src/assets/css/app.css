@@ -1,0 +1,14 @@
+/* @import 'utility/fonts'; */
+
+@import 'tailwindcss/base';
+
+@import 'tailwindcss/components';
+
+@import 'core/document';
+@import 'core/typography';
+@import 'core/anchor';
+
+/* @import 'block/container';
+@import 'block/wysiwyg'; */
+
+@import 'tailwindcss/utilities';

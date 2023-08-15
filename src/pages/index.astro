@@ -2,18 +2,21 @@
 // Welcome to Astro! Everything between these triple-dash code fences
 // is your "component frontmatter". It never runs in the browser.
 console.log('This runs in your terminal, not the browser!');
+
+import '../assets/css/app.css';
 ---
-<!-- Below is your "component template." It's just HTML, but with
-     some magic sprinkled in to help you build great templates. -->
+
+<!-- Below is your "component template." It's just HTML, but with some magic sprinkled in to help you build great templates. -->
 <html>
-  <body>
-    <h1>Hello, World! :)</h1>
+  <body class="test">
+    <h1 class="type-h1">Hello, World! :)</h1>
 
     <a href="/about">About</a>
+
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae, omnis? Optio, aperiam, facere
+      magni modi ut delectus nihil tenetur porro cum dolorum sapiente nobis consectetur vel ducimus
+      doloribus laudantium voluptatibus?
+    </p>
   </body>
 </html>
-<style>
-  h1 {
-    color: orange;
-  }
-</style>
