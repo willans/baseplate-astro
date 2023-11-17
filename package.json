@@ -7,12 +7,12 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^4.0.0",
-    "@astrojs/vue": "^2.2.1",
-    "astro": "^2.10.7",
-    "autoprefixer": "^10.4.15",
+    "@astrojs/tailwind": "^5.0.2",
+    "@astrojs/vue": "^3.0.4",
+    "astro": "^3.5.5",
+    "autoprefixer": "^10.4.16",
     "postcss-import": "^15.1.0",
-    "tailwindcss": "^3.3.3",
-    "vue": "^3.3.4"
+    "tailwindcss": "^3.3.5",
+    "vue": "^3.3.8"
   }
 }
